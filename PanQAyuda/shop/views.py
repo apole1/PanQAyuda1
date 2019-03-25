@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-
-# Create your views here.
-=======
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
 #from cart.forms import CartAddProductForm
@@ -32,5 +27,3 @@ def product_detail(request, id, slug):
                   'shop/product/detail.html',
                   {'product': product,
                    'cart_product_form': cart_product_form})
-
->>>>>>> Social_login
