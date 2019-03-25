@@ -1,1 +1,4 @@
-/PanQAyuda/PanQAyuda/
+*.pyc
+.DS_Store
+staticfiles
+settings.py
