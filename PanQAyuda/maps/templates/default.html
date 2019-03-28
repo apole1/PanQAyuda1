@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset='utf-8' />
+    <title>Interactive maps for Django web apps</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+    </style>
+    </head>
+
+    <body>
+
+    <style>
+    .coordinates {
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        position: absolute;
+        bottom: 40px;
+        left: 10px;
+        padding:5px 10px;
+        margin: 0;
+        font-size: 11px;
+        line-height: 18px;
+        border-radius: 3px;
+        display: none;
+    }
+    </style>
+
+    <h1>Map time!</h1>
+    <div id='map' width="100%" style='height:400px'></div>
+    <pre id='coordinates' class='coordinates'></pre>
+
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoicGFucWF5dWRhMjAxOSIsImEiOiJjanRzNW1sbzQwamgzNDRwbDRjYTZ0Z2trIn0.tg9Ofx61mAPjjNgmvhMk9A';
+    var coordinates = document.getElementById('coordinates');
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-100.405, 20.613],
+        zoom: 14
+    });
+
+    var marker = new mapboxgl.Marker({
+        draggable: false
+    })
+        .setLngLat([-100.405, 20.613])
+        .addTo(map);
+
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
+    </script>
+
+    </body>
+</html>
