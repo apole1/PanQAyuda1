@@ -2,3 +2,4 @@
 .DS_Store
 staticfiles
 settings.py
+_pycache
