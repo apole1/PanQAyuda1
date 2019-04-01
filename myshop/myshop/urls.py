@@ -12,7 +12,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('shop/', include('shop.urls', namespace='shop')),
     path('account/', include('django.contrib.auth.urls')),
-    path("login/", views.login, name="login"),
+    path("login/", views.social_login, name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path('social-auth/', include('social_django.urls', namespace="social")),
     path("signin/", views.home, name="home"),
