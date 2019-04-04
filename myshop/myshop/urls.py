@@ -7,6 +7,7 @@ from core import views
 
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
@@ -16,6 +17,7 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path('social-auth/', include('social_django.urls', namespace="social")),
     path("signin/", views.home, name="home"),
+
 
 ]
 

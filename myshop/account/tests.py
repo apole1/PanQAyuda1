@@ -12,11 +12,19 @@ class LogInTest(TestCase):
             'username': 'paulo',
             'password': 'prueba1236'}
 
-    def test_login(self):
+        self.credentials3 = {
+            'username': 'paulo1',
+            'password': 'prueba123'}
+
+    def test_Wronglogin(self):
         # send login data
         response = self.client.post('/account/login/', self.credentials2, follow=True)
-        # should be logged in now
-        self.assertTrue(response.context['user'].is_active)
+        self.assertFalse(response.context['user'].is_active)
+
+    def test_Wronglogin2(self):
+        # send login data
+        response = self.client.post('/account/login/', self.credentials2, follow=True)
+        self.assertFalse(response.context['user'].is_active)
 
     def test_login2(self):
         # send login data
