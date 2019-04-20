@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
 from cart.forms import CartAddProductForm
 from django.core.paginator import Paginator
+from django.db.models import Q
+import operator
+from functools import reduce
 
 
 def product_list(request, category_slug=None):
@@ -13,8 +16,12 @@ def product_list(request, category_slug=None):
         products_list = products_list.filter(category=category)
     query = request.GET.get("q")
     if query:
-        products_list = products_list.filter(name__icontains=query)
-    paginator = Paginator(products_list, 16) # Show 16 products per page
+        query_list = query.split()
+        products_list = products_list.filter(
+            reduce(operator.and_, (Q(name__icontains=q) for q in query_list)) |
+            reduce(operator.and_, (Q(description__icontains=q) for q in query_list))
+        ).distinct()
+    paginator = Paginator(products_list, 12) # Show 12 products per page
     page = request.GET.get('page')
     products = paginator.get_page(page)
     return render(request,
