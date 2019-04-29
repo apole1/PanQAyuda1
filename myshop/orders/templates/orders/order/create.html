@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+  {%if cart %}
   <h1>Datos de la orden</h1>
 
   <div class="order-info">
@@ -25,4 +26,7 @@
     <p><input type="submit" value="Confirmar Orden"></p>
     {% csrf_token %}
   </form>
+  {% else %}
+  <p>Por favor, ingresa productos a tu carrito para confirmar la compra.</p>
+  {% endif %}
 {% endblock %}
