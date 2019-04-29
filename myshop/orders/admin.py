@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, OrderItem
+from .models import Order, OrderItem, Postal_Code
 
 
 class OrderItemInline(admin.TabularInline):
@@ -13,3 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
                     'created', 'updated']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
+
+@admin.register(Postal_Code)
+class Postal_CodeAdmin(admin.ModelAdmin):
+    list_display = ['postal_code']

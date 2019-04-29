@@ -2,13 +2,15 @@ from django.db import models
 from shop.models import Product
 
 class Postal_Code(models.Model):
-    postal_code = models.IntegerField()
+    postal_code = models.IntegerField(blank=True)
 
     class Meta:
         ordering = ('postal_code',)
+        verbose_name = 'Postal Code'
+        verbose_name_plural = 'Postal Codes'
 
     def __str__(self):
-        return self.postal_code
+        return self.postal_code.__str__()
 
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
