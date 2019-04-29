@@ -20,7 +20,7 @@ def order_create(request):
             cart.clear()
             # launch asynchronous task
             order_created.delay(order.id)
-            return render(request,
+        return render(request,
                           'orders/order/created.html',
                           {'order': order})
     else:
