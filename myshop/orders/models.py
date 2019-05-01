@@ -1,8 +1,9 @@
 from django.db import models
 from shop.models import Product
+from django.contrib.auth.models import User
 
 class Postal_Code(models.Model):
-    postal_code = models.IntegerField(blank=True)
+    postal_code = models.IntegerField(db_index=True, default=0)
 
     class Meta:
         ordering = ('postal_code',)
@@ -13,13 +14,13 @@ class Postal_Code(models.Model):
         return self.postal_code.__str__()
 
 class Order(models.Model):
+    user = models.ForeignKey(User, related_name='Client', on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     home_delivery = models.BooleanField(default=False)
     address = models.CharField(max_length=250, blank=True)
-    postal_code = models.ForeignKey(Postal_Code, related_name='zipcode', on_delete=models.CASCADE)
-    city = models.CharField(max_length=100, blank=True)
+    postal_code = models.ForeignKey(Postal_Code, related_name='zipcode', on_delete=models.CASCADE, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)

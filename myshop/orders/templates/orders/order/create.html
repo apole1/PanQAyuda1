@@ -23,7 +23,9 @@
 
   <form action="." method="post" class="order-form">
     {{ form.as_p }}
-    <p><input type="submit" value="Confirmar Orden"></p>
+    <p><input type="submit" value="Entregar a domicilio" name="home_delivery"></p>
+    {% csrf_token %}
+    <p><input type="submit" value="Recoger en tienda" name="store_pickup"></p>
     {% csrf_token %}
   </form>
   {% else %}
