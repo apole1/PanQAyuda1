@@ -20,13 +20,20 @@
     </ul>
     <p>Total: ${{ cart.get_total_price }}</p>
   </div>
-
+  {% if not valid %}
+    <p>{{ invalid }}</p>
+  {% endif %}
   <form action="." method="post" class="order-form">
     {{ form.as_p }}
-    <p><input type="submit" value="Entregar a domicilio" name="home_delivery"></p>
-    {% csrf_token %}
     <p><input type="submit" value="Recoger en tienda" name="store_pickup"></p>
     {% csrf_token %}
+    {% if cart.get_total_price >= 500 %}
+      <p><input type="submit" value="Entregar a domicilio" name="home_delivery"></p>
+      {% csrf_token %}
+    {% else %}
+      <p><input type="button" value="Entrega a domicilio en compras desde 500"></p>
+    {% endif %}
+
   </form>
   {% else %}
   <p>Por favor, ingresa productos a tu carrito para confirmar la compra.</p>

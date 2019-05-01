@@ -18,7 +18,6 @@ class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
-    home_delivery = models.BooleanField(default=False)
     address = models.CharField(max_length=250, blank=True)
     postal_code = models.ForeignKey(Postal_Code, related_name='zipcode', on_delete=models.CASCADE, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)

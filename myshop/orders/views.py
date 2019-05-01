@@ -6,6 +6,8 @@ from .tasks import order_created
 
 
 def order_create(request):
+    valid = True
+    invalid = ""
     cart = Cart(request)
     if request.method == 'POST' and 'store_pickup' in request.POST:
         form = OrderCreateForm(request.POST)
@@ -46,9 +48,12 @@ def order_create(request):
                 return render(request,
                               'orders/order/created.html',
                               {'order': order})
+        #address and postal_code not introduced
+        valid = False
+        invalid = "Para entregas a domicilio por favor ingrese una dirección"
         return render(request,
                           'orders/order/create.html',
-                          {'cart': cart, 'form': form})
+                          {'cart': cart, 'form': form, 'valid':valid, 'invalid':invalid})
     else:
         form = OrderCreateForm()
     return render(request,
