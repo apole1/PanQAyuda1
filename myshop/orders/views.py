@@ -46,9 +46,8 @@ def order_create(request):
                 cart.clear()
                 # launch asynchronous task
                 #order_created.delay(order.id)
-                return render(request,
-                              'orders/order/created.html',
-                              {'order': order})
+                return redirect(reverse('payment:process'))
+                #return render(request, 'orders/order/created.html', {'order': order})
         #address and postal_code not introduced
         valid = False
         invalid = "Para entregas a domicilio por favor ingrese una dirección"
