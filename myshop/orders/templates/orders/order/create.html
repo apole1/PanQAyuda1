@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block content %}
+  {% if not user.is_authenticated %}
+    <p>Por favor, inicia sesión para completar tu compra.</p>
+  {% else %}
+
   {%if cart %}
   <h1>Datos de la orden</h1>
 
@@ -37,5 +41,7 @@
   </form>
   {% else %}
   <p>Por favor, ingresa productos a tu carrito para confirmar la compra.</p>
+  {% endif %}
+
   {% endif %}
 {% endblock %}
