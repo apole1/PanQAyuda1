@@ -9,18 +9,31 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def payment_done(request):
-    return render(request,'payment/done.html')
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+    order.paid = True
+    order.status = "Pedido"
+    order.save()
+    return render(request,'payment/done.html', {'order':order})
 
 
 @csrf_exempt
 def payment_canceled(request):
+    order_id = request.session.get('order_id')
+    order = get_object_or_404(Order, id=order_id)
+    order.status = "Pedido"
+    order.save()
     return render(request,'payment/canceled.html')
 
 
 def payment_process(request):
     order_id = request.session.get('order_id')
-    order = get_object_or_404(Order,id=order_id)
+    order = get_object_or_404(Order, id=order_id)
+    order.status = 'Pedido'
+    order.save()
     host = request.get_host()
+    if request.method == 'POST' and 'cash_payment' in request.POST:
+        return render(request, 'orders/order/created.html', {'order': order})
 
     paypal_dict ={
         'business': settings.PAYPAL_RECEIVER_EMAIL,

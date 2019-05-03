@@ -12,7 +12,7 @@ class OrderCreateForm(forms.ModelForm):
             'first_name': _('Nombre(s)'),
             'last_name': _('Apellidos'),
             'email': _('Correo electrónico'),
-            #'phone': _('Teléfono'),
+            'phone': _('Teléfono'),
             'address': _('Dirección'),
             'postal_code': _('Código postal'),
         }

@@ -3,4 +3,5 @@
 {% block content %}
     <h1>El pago ha sido cancelado</h1>
     <p>Ocurrió un error con tu pago</p>
+    <a href="{% url 'payment:process' %}">Regresar a las formas de pago</a>
 {% endblock %}

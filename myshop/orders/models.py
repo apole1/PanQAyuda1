@@ -23,13 +23,13 @@ class Order(models.Model):
     address = models.CharField(max_length=250, blank=True)
     postal_code = models.ForeignKey(Postal_Code, related_name='zipcode', on_delete=models.CASCADE, blank=True, null=True)
     STATUS_CHOICES = (
+        ('Creado', 'Creado'),
         ('Pedido', 'Pedido'),
-        ('Pagado', 'Pagado'),
         ('Enviado', 'Enviado'),
         ('Entregado', 'Entregado'),
         ('Cancelado', 'Cancelado'),
     )
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pedido')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Creado')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
