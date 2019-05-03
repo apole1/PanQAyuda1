@@ -1,6 +1,7 @@
 from django.db import models
 from shop.models import Product
 from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Postal_Code(models.Model):
     postal_code = models.IntegerField(db_index=True, default=0)
@@ -18,8 +19,17 @@ class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
+    phone = models.CharField(max_length=12)
     address = models.CharField(max_length=250, blank=True)
     postal_code = models.ForeignKey(Postal_Code, related_name='zipcode', on_delete=models.CASCADE, blank=True, null=True)
+    STATUS_CHOICES = (
+        ('Pedido', 'Pedido'),
+        ('Pagado', 'Pagado'),
+        ('Enviado', 'Enviado'),
+        ('Entregado', 'Entregado'),
+        ('Cancelado', 'Cancelado'),
+    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pedido')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
