@@ -1,7 +1,6 @@
 from django.db import models
 from shop.models import Product
 from django.contrib.auth.models import User
-from phonenumber_field.modelfields import PhoneNumberField
 
 class Postal_Code(models.Model):
     postal_code = models.IntegerField(db_index=True, default=0)
@@ -15,7 +14,7 @@ class Postal_Code(models.Model):
         return self.postal_code.__str__()
 
 class Order(models.Model):
-    user = models.ForeignKey(User, related_name='Client', on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, related_name='Client', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
