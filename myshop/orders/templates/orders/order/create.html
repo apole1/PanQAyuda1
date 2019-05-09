@@ -1,14 +1,22 @@
 {% extends "shop/base.html" %}
 
 {% block title %}
-  Checkout
+  Datos de la orden
 {% endblock %}
 
 {% block content %}
-  <h1>Checkout</h1>
+  {% if not user.is_authenticated %}
+    <p>Por favor, inicia sesión para completar tu compra.</p><br>
+    <p><a class="navbar-link" href="{% url 'core:user_login' %}">Inicia sesión</a></p>
+    <p><a class="navbar-link" href="{% url 'core:register' %}">Regístrate</a></p>
+    <p><a class="navbar-link" href="{% url 'social:begin' 'facebook' %}">Inicia sesión con Facebook</a></p>
+  {% else %}
+
+  {%if cart %}
+  <h1>Datos de la orden</h1>
 
   <div class="order-info">
-    <h3>Your order</h3>
+    <h3>Tu orden</h3>
     <ul>
       {% for item in cart %}
         <li>
@@ -19,10 +27,24 @@
     </ul>
     <p>Total: ${{ cart.get_total_price }}</p>
   </div>
-
+  {% if not valid %}
+    <p>{{ invalid }}</p>
+  {% endif %}
   <form action="." method="post" class="order-form">
     {{ form.as_p }}
-    <p><input type="submit" value="Place order"></p>
+    <p><input type="submit" value="Recoger en tienda" name="store_pickup"></p>
     {% csrf_token %}
+    {% if cart.get_total_price >= 500 %}
+      <p><input type="submit" value="Entregar a domicilio" name="home_delivery"></p>
+      {% csrf_token %}
+    {% else %}
+      <p><input type="button" value="Entrega a domicilio en compras desde 500"></p>
+    {% endif %}
+
   </form>
+  {% else %}
+  <p>Por favor, ingresa productos a tu carrito para confirmar la compra.</p>
+  {% endif %}
+  {% endif %}
+  {{form.render}}
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends "shop/base.html" %}
+{% block title %} Pago usando PayPal {% endblock %}
+{% block content %}
+    <h1>Selecciona tu forma de pago</h1>
+    {{form.render}}
+    <form action="." method="post" class="cash-form">
+        <p><input type="submit" value="Pago en efectivo" name="cash_payment"></p>
+        {% csrf_token %}
+    </form>
+{% endblock %}}

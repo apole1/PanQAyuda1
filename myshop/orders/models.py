@@ -1,14 +1,34 @@
 from django.db import models
 from shop.models import Product
+from django.contrib.auth.models import User
 
+class Postal_Code(models.Model):
+    postal_code = models.IntegerField(db_index=True, default=0)
+
+    class Meta:
+        ordering = ('postal_code',)
+        verbose_name = 'Postal Code'
+        verbose_name_plural = 'Postal Codes'
+
+    def __str__(self):
+        return self.postal_code.__str__()
 
 class Order(models.Model):
+    user = models.ForeignKey(User, related_name='Client', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
-    address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
-    city = models.CharField(max_length=100)
+    phone = models.CharField(max_length=12)
+    address = models.CharField(max_length=250, blank=True)
+    postal_code = models.ForeignKey(Postal_Code, related_name='zipcode', on_delete=models.CASCADE, blank=True, null=True)
+    STATUS_CHOICES = (
+        ('Creado', 'Creado'),
+        ('Pedido', 'Pedido'),
+        ('Enviado', 'Enviado'),
+        ('Entregado', 'Entregado'),
+        ('Cancelado', 'Cancelado'),
+    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Creado')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
