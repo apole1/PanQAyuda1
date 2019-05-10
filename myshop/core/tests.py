@@ -9,11 +9,30 @@ from social_django.models import UserSocialAuth
 from social_django.views import get_session_timeout
 from django.contrib.auth.models import User
 
+class UsersCreate(TestCase):
+    def setUp(self):
+        User.objects.create(username="UsuarioPrueba", password="PasswordPrueba")
+        User.objects.create(username="Usuario2", password="Password2")
+
+    def test_existing(self):
+        try:
+            u = User.objects.get(username="UsuarioPrueba")
+        except User.DoesNotExist:
+            u = None
+        self.assertEqual(u.username, "UsuarioPrueba")
+
+    def test_non_existing(self):
+        try:
+            u = User.objects.get(username="FakeUser")
+        except User.DoesNotExist:
+            u = None
+        self.assertEqual(u, None)
+
 
 class SimpleTest(TestCase):
     def setUp(self):
         self.user = {
-            'username': 'paulo',
+            'username': 'prueba',
             'password': 'prueba123'}
         User.objects.create_user(**self.user)
 
@@ -24,7 +43,7 @@ class SimpleTest(TestCase):
 
     def test_incorrect_login(self):
         self.user ={
-            'username': 'paulo',
+            'username': 'prueba',
             'password': 'fakepass'
         }
         response = self.client.post('/core/user_login/', self.user, follow=True)
